@@ -645,8 +645,8 @@ async def auto_filter(client, msg, spoll=False):
                 ),
             ]
             for file in files
-            file_id = file.file_id
-            filename = f"[{get_size(file.file_size)}] {file.file_name}"
+        file_id = file.file_id
+        filename = f"[{get_size(file.file_size)}] {file.file_name}"
         ]
     else:
         btn = [
