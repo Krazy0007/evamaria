@@ -55,7 +55,7 @@ PROTECT_CONTENT = is_enabled((environ.get('PROTECT_CONTENT', "False")), False)
 PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "True")), True)
 AUTO_DELETE = int(environ.get('AUTO_DELETE', "600"))
 IMDB_DELETE = int(environ.get('IMDB_DELETE', "300"))
-PORT = environ.get("PORT", "8080")
+
 
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
