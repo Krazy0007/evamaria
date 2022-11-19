@@ -645,18 +645,17 @@ async def auto_filter(client, msg, spoll=False):
                 ),
             ]
             for file in files
+            file_id = file.file_id
+            filename = f"[{get_size(file.file_size)}] {file.file_name}"
         ]
     else:
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"{file.file_name}",
-                    url=(f"https://telegram.me/{temp.U_NAME}?start=pre_{file.file_id}"),
+                    text=f"{file_name}",
+                    url=(f"https://telegram.me/{temp.U_NAME}?start=pre_{file_id}"),
                 ),
-                InlineKeyboardButton(
-                    text=f"{get_size(file.file_size)}",
-                    url=(f"https://telegram.me/{temp.U_NAME}?start=pre_{file.file_id}"),
-                ),
+                
             ]
             for file in files
         ]
