@@ -72,3 +72,9 @@ LOG_STR += f"Your current IMDB template is {IMDB_TEMPLATE}"
 
 URL_SHORTENR_WEBSITE = environ.get('URL_SHORTENR_WEBSITE', 'paisakamalo.in')
 URL_SHORTNER_WEBSITE_API = environ.get('URL_SHORTNER_WEBSITE_API', 'a5a509a953dbd4c0e2f5ff14e20f456a132dc4c7')
+
+#  Replit Config
+REPLIT_USERNAME = environ.get("REPLIT_USERNAME", None)
+REPLIT_APP_NAME = environ.get("REPLIT_APP_NAME", None)
+REPLIT = f"https://{REPLIT_APP_NAME.lower()}.{REPLIT_USERNAME}.repl.co" if REPLIT_APP_NAME and REPLIT_USERNAME else False
+PING_INTERVAL = int(environ.get("PING_INTERVAL", "300"))
