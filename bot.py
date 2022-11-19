@@ -11,10 +11,35 @@ from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from database.ia_filterdb import Media
 from database.users_chats_db import db
-from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR
+from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR, REPLIT
 from utils import temp
 from typing import Union, Optional, AsyncGenerator
 from pyrogram import types
+
+if REPLIT:
+    from flask import Flask, jsonify
+    from threading import Thread
+    
+    web_app = Flask('')
+    
+    @web_app.route('/')
+    def main():
+        
+
+        
+        res = {
+            "status":"running",
+            "hosted":"replit.com",
+        }
+        
+        return jsonify(res)
+
+    def run():
+      web_app.run(host="0.0.0.0", port=8000)
+    
+    async def keep_alive():
+      server = Thread(target=run)
+      server.start()
 class Bot(Client):
 
     def __init__(self):
@@ -29,6 +54,8 @@ class Bot(Client):
         )
 
     async def start(self):
+        if REPLIT:
+            await keep_alive()
         b_users, b_chats = await db.get_banned()
         temp.BANNED_USERS = b_users
         temp.BANNED_CHATS = b_chats
