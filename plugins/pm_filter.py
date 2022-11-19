@@ -645,13 +645,21 @@ async def auto_filter(client, msg, spoll=False):
                 ),
             ]
             for file in files
-                file_id = file.file_id
-                filename = f"[{get_size(file.file_size)}] {file.file_name}"
-                btn.append(
-                    [InlineKeyboardButton(text=f"{filename}", url=f"https://telegram.dog/{nyva}?start=subinps_-_-_-_{file_id}")]
-                )
-            for file in files
+        ]
+    else:
+        btn = [
+            [
+                InlineKeyboardButton(
+                    text=f"{file.file_name}",
+                    url=(f"https://telegram.me/{temp.U_NAME}?start=pre_{file.file_id}"),
+                ),
+                InlineKeyboardButton(
+                    text=f"{get_size(file.file_size)}",
+                    url=(f"https://telegram.me/{temp.U_NAME}?start=pre_{file.file_id}"),
+                ),
             ]
+            for file in files
+        ]
 
     if offset != "":
         key = f"{message.chat.id}-{message.id}"
