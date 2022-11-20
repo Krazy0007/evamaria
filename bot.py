@@ -11,35 +11,13 @@ from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from database.ia_filterdb import Media
 from database.users_chats_db import db
-from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR, REPLIT
+from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR, PORT
 from utils import temp
 from typing import Union, Optional, AsyncGenerator
 from pyrogram import types
+from plugins import web_server
+from aiohttp import web
 
-if REPLIT:
-    from flask import Flask, jsonify
-    from threading import Thread
-    
-    web_app = Flask('')
-    
-    @web_app.route('/')
-    def main():
-        
-
-        
-        res = {
-            "status":"running",
-            "hosted":"replit.com",
-        }
-        
-        return jsonify(res)
-
-    def run():
-      web_app.run(host="0.0.0.0", port=8000)
-    
-    async def keep_alive():
-      server = Thread(target=run)
-      server.start()
 class Bot(Client):
 
     def __init__(self):
@@ -54,8 +32,6 @@ class Bot(Client):
         )
 
     async def start(self):
-        if REPLIT:
-            await keep_alive()
         b_users, b_chats = await db.get_banned()
         temp.BANNED_USERS = b_users
         temp.BANNED_CHATS = b_chats
@@ -68,8 +44,12 @@ class Bot(Client):
         self.username = '@' + me.username
         logging.info(f"{me.first_name} with for Pyrogram v{__version__} (Layer {layer}) started on {me.username}.")
         logging.info(LOG_STR)
-        
-        
+         #web-response
+        app = web.AppRunner(await web_server())
+        await app.setup()
+        bind_address = "0.0.0.0"
+        await web.TCPSite(app, bind_address, PORT).start()
+
     async def stop(self, *args):
         await super().stop()
         logging.info("Bot stopped. Bye.")
